@@ -1,0 +1,13 @@
+.centre-grid {
+    -fx-background-color: #BCE3FC ;
+    -fx-border-color: #F7FCF8 ;
+    -fx-border-width: 1 ;
+}
+
+.cool-button {
+    -fx-background-color:  #B8CDFF ;
+}
+
+.cool-button:hover {
+    -fx-background-color: #5977FF;
+}
