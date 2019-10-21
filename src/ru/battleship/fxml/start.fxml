@@ -14,7 +14,7 @@
          <children>
             <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="150.0" style="-fx-background-color: #B8CDFF;">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="150.0" styleClass="cool-button" text="Новая игра" textFill="WHITE">
+                  <Button fx:id="btStart" mnemonicParsing="false" onAction="#btStartButtonAction" prefHeight="51.0" prefWidth="150.0" styleClass="cool-button" text="Новая игра" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>
@@ -39,7 +39,7 @@
             </VBox>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="650.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="763.0" prefWidth="650.0">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="635.0" prefWidth="650.0">
                      <children>
                         <GridPane fx:id="pnGridBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseReleased="#pnGridBoxMouseReleasedAction" prefHeight="504.0" prefWidth="504.0" styleClass="centre-grid">
                           <columnConstraints>
@@ -84,21 +84,21 @@
             </VBox>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="200.0">
                <children>
-                  <StackPane fx:id="pnStack" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
+                  <StackPane fx:id="pnStack" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
                      <VBox.margin>
                         <Insets bottom="50.0" />
                      </VBox.margin></StackPane>
-                  <StackPane fx:id="pnStack1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
+                  <StackPane fx:id="pnStack1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
                      <VBox.margin>
                         <Insets bottom="50.0" />
                      </VBox.margin>
                   </StackPane>
-                  <StackPane fx:id="pnStack2" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
+                  <StackPane fx:id="pnStack2" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
                      <VBox.margin>
                         <Insets bottom="50.0" />
                      </VBox.margin>
                   </StackPane>
-                  <StackPane fx:id="pnStack3" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" />
+                  <StackPane fx:id="pnStack3" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;" />
                </children>
             </VBox>
          </children>
