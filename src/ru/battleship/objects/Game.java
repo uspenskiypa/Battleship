@@ -1,10 +1,7 @@
 package ru.battleship.objects;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -13,19 +10,18 @@ import ru.battleship.controller.GameController;
 import ru.battleship.controller.StartController;
 
 public class Game {
+    
     public static final int GRID_WIDTH = 10, GRID_HEIGHT = 10;
     private Scene gameScene;
     private Scene startScene;
     private StartController startController;
     private GameController gameController;
     private static Game instance;
-    private Image image;
-    private Image[] arrImage = new Image[5];
-    private ImageView imageContainer;
+    private Ship shipContainer;
+    private Board board; 
     
     private Game() {
-        image = new Image(getClass().getResourceAsStream("/ru/battleship/icons/ship.png"));
-        arrImage[4] = image;
+        board = new Board(GRID_WIDTH, GRID_HEIGHT);
     }
     
     public void fillGridPane(GridPane pnGridBox) {
@@ -39,37 +35,43 @@ public class Game {
         }
     }
     
-    public void fillStackPane(StackPane pnStack, int num) {
+    public void fillShips(StackPane[] arrPane) {
+        addShip(arrPane[0], 1);
+        addShip(arrPane[0], 1);
+        addShip(arrPane[0], 1);
+        addShip(arrPane[0], 1);
+        addShip(arrPane[1], 2);
+        addShip(arrPane[1], 2);
+        addShip(arrPane[1], 2);
+        addShip(arrPane[2], 3);
+        addShip(arrPane[2], 3);
+        addShip(arrPane[3], 4);
+    }
+    
+    public void addShip(StackPane pnStack, int num) {
+        Ship prevShip = null;
         for (int i = 0; i < num; i++) {
-            ImageView imageViewer = new ImageView(arrImage[num]);
-            imageViewer.setOnMousePressed(MousePressedHandler);
-            imageViewer.setOnMouseReleased(MouseReleasedHandler);
-            pnStack.getChildren().add(imageViewer);
+            Ship ship = new Ship(prevShip);
+            if (prevShip != null) {
+                prevShip.setNext(ship);
+            }
+            ship.setOnMouseReleased(MouseReleasedHandler);
+            pnStack.getChildren().add(ship);
+            prevShip = ship;
         }
     }
     
     EventHandler MouseMovedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e){
-            System.out.println(e.getTarget());
-            Pane pane = (Pane) e.getTarget();
-            
+
         }
-    };
-    
-    EventHandler MousePressedHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e){
-            System.out.println(e.getTarget());
-        }
-    };
-    
+    };    
         
     EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
         @Override
-        public void handle(MouseEvent e){
-            setImageContainer((ImageView) e.getTarget());
-            System.out.println(e.getTarget());
+        public void handle(MouseEvent e) {
+            setShipContainer((Ship) e.getTarget());
         }
     };
     
@@ -96,12 +98,12 @@ public class Game {
         this.startScene = startScene;
     }   
 
-    public ImageView getImageContainer() {
-        return imageContainer;
+    public Ship getShipContainer() {
+        return shipContainer;
     }
 
-    public void setImageContainer(ImageView imageContainer) {
-        this.imageContainer = imageContainer;
+    public void setShipContainer(Ship shipContainer) {
+        this.shipContainer = shipContainer;
     }
 
     public StartController getStartController() {
@@ -118,5 +120,9 @@ public class Game {
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

@@ -84,11 +84,11 @@
             </VBox>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="200.0">
                <children>
-                  <StackPane fx:id="pnStack" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
+                  <StackPane fx:id="pnStack4" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
                      <VBox.margin>
                         <Insets bottom="50.0" />
                      </VBox.margin></StackPane>
-                  <StackPane fx:id="pnStack1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
+                  <StackPane fx:id="pnStack3" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;">
                      <VBox.margin>
                         <Insets bottom="50.0" />
                      </VBox.margin>
@@ -98,7 +98,7 @@
                         <Insets bottom="50.0" />
                      </VBox.margin>
                   </StackPane>
-                  <StackPane fx:id="pnStack3" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;" />
+                  <StackPane fx:id="pnStack1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #BBC7F9;" />
                </children>
             </VBox>
          </children>

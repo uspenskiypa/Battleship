@@ -18,7 +18,8 @@ public class GameController {
     
     @FXML
     private void initialize() {
-        game.fillGridPane(pnGridAI);
+        //game.fillGridPane(pnGridPlayer);
+        game.fillGridPane(pnGridAI);  
     }
     
     public void init(GridPane pnGridBox) {
