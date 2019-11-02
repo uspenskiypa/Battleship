@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ru.battleship.objects.Game;
 import ru.battleship.objects.Ship;
+import ru.battleship.objects.Ships;
 
 public class StartController {
     
@@ -56,7 +57,7 @@ public class StartController {
         try {
             if (shipContainer != null && e.getTarget() instanceof Pane) {
                 Pane target = (Pane) e.getTarget();
-                LinkedList<Ship> ships = createShipList(shipContainer);
+                Ships ships = shipContainer.getShips();
                 int[] coords = getCoordinates(target);
                 if (game.getBoard().isCurrectCell(coords, ships, false)) {
                     for (int i = 0; i < ships.size(); i++) {
@@ -65,34 +66,26 @@ public class StartController {
                     }
                     game.getBoard().changeStates(getGridBox());
                     game.setShipContainer(null);
-                    Collections.reverse(ships);
+                    ships.setOpasity(1);
                 }
-                else if (game.getBoard().isCurrectCell(coords, ships, true)) {
-                    for (int i = 0; i < ships.size(); i++) {
-                        Pane target2 = (Pane) getNodeFromGridPane(coords[0], coords[1]+i);
-                        target2.getChildren().add(ships.get(i));
+                else {
+                    ships.reverse();
+                    if (game.getBoard().isCurrectCell(coords, ships, true)) {
+                        for (int i = 0; i < ships.size(); i++) {
+                            Pane target2 = (Pane) getNodeFromGridPane(coords[0], coords[1] + i);
+                            target2.getChildren().add(ships.get(i));
+                        }
+                        game.getBoard().changeStates(getGridBox());
+                        game.setShipContainer(null);
+                        ships.setOpasity(1);
                     }
-                    game.getBoard().changeStates(getGridBox());
-                    game.setShipContainer(null);
+                    ships.reverse();
                 }
             }
         }
         catch(Exception ex) {
             ex.printStackTrace();
         }
-    }
-    
-    private LinkedList<Ship> createShipList(Ship curShip) {
-        LinkedList<Ship> ships = new LinkedList<>();
-        while (curShip.hasNext()) {
-            curShip = curShip.getNext();
-        }
-        ships.add(curShip);
-        while (curShip.hasPrev()) {
-            curShip = curShip.getPrev();
-            ships.add(curShip);
-        }
-        return ships;
     }
 
     //Рассчитывает и возвразает координаты target в GridPane
@@ -102,6 +95,7 @@ public class StartController {
         return new int[] {row, col};
     }
     
+    //Возвращает ситуацию на игровом поле
     private int[][] getGridBox() {
         int[][] arrGridBox = new int[10][10];
         for (int i = 0; i < 10; i++) {

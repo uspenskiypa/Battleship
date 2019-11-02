@@ -1,7 +1,5 @@
 package ru.battleship.objects;
 
-import java.util.LinkedList;
-
 public class Board {
     
     private Cell[][] cellField; //двумерный массив ячеек
@@ -25,7 +23,7 @@ public class Board {
         return cellField;
     }
 
-    public boolean isCurrectCell(int[] coords, LinkedList<Ship> ships, boolean isReverse) {
+    public boolean isCurrectCell(int[] coords, Ships ships, boolean isReverse) {
         for (int k = 0; k < ships.size(); k++) {
             int x = coords[0];
             int y = coords[1];
@@ -36,10 +34,9 @@ public class Board {
             for (int i = 0; i < dx.length; i++) {
                 int xc = x + dx[i];
                 int yc = y + dy[i];
-                if ((xc < 0) || (yc < 0) || (xc == width) || (yc == height)) {
+                if ((xc < 0) || (yc < 0) || (xc >= width) || (yc >= height)) {
                     continue;
                 }
-                //if (cellField[xc][yc].ship != ships.get(k)) {
                 if (!ships.contains(cellField[xc][yc].ship)) {
                     if (cellField[xc][yc].state == State.SHIP) {
                         return false;

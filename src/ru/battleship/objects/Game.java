@@ -50,6 +50,7 @@ public class Game {
     
     public void addShip(StackPane pnStack, int num) {
         Ship prevShip = null;
+        Ships ships = new Ships();
         for (int i = 0; i < num; i++) {
             Ship ship = new Ship(prevShip);
             if (prevShip != null) {
@@ -58,6 +59,7 @@ public class Game {
             ship.setOnMouseReleased(MouseReleasedHandler);
             pnStack.getChildren().add(ship);
             prevShip = ship;
+            ships.addShip(ship);
         }
     }
     
@@ -71,7 +73,11 @@ public class Game {
     EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e) {
-            setShipContainer((Ship) e.getTarget());
+            if (shipContainer != null) {
+                shipContainer.getShips().setOpasity(1);
+            }
+            shipContainer = (Ship) e.getTarget();
+            shipContainer.getShips().setOpasity(0.3);
         }
     };
     

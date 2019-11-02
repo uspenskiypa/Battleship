@@ -8,6 +8,7 @@ public class Ship extends ImageView {
     private Ship next;
     private Ship prev;
     private Image image;
+    private Ships ships;
     
     public Ship() {
         prev = null;
@@ -43,5 +44,13 @@ public class Ship extends ImageView {
 
     public void setNext(Ship next) {
         this.next = next;
+    }
+
+    public Ships getShips() {
+        return ships;
+    }
+
+    public void setShips(Ships ships) {
+        this.ships = ships;
     }
 }
