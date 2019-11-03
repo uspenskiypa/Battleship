@@ -23,11 +23,16 @@ public class Board {
         return cellField;
     }
 
-    public boolean isCurrectCell(int[] coords, Ships ships, boolean isReverse) {
+    public boolean isCurrectCell(int[] coords, Ships ships) {
         for (int k = 0; k < ships.size(); k++) {
             int x = coords[0];
             int y = coords[1];
-            y += isReverse ? k : -k;
+            switch (ships.getCourse()) {
+                case 0: y -= k; break;
+                case 1: y += k; break;
+                case 2: x += k; break;
+                case 3: x -= k; break;
+            }
             if ((x < 0) || (y < 0) || (x >= width) || (y >= height)) {
                 return false;
             }

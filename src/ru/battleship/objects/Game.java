@@ -2,6 +2,7 @@ package ru.battleship.objects;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -11,7 +12,7 @@ import ru.battleship.controller.StartController;
 
 public class Game {
     
-    public static final int GRID_WIDTH = 10, GRID_HEIGHT = 10;
+    public final static int GRID_WIDTH = 10, GRID_HEIGHT = 10;
     private Scene gameScene;
     private Scene startScene;
     private StartController startController;
@@ -73,6 +74,9 @@ public class Game {
     EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e) {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                return;
+            }
             if (shipContainer != null) {
                 shipContainer.getShips().setOpasity(1);
             }

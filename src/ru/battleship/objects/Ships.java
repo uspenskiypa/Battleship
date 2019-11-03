@@ -6,10 +6,12 @@ public class Ships {
     
     private LinkedList<Ship> ships;
     private int course;
+    public final static int HORIZONTAL_COURSE = 0;
+    public final static int VERTICAL_COURSE = 2;
     
     public Ships() { 
         ships = new LinkedList<>();
-        course = 0;
+        course = HORIZONTAL_COURSE;
     }
     
     public void addShip(Ship ship) {
@@ -49,9 +51,13 @@ public class Ships {
 
     public int getCourse() {
         return course;
-    }
-
+    } 
+    
     public void setCourse(int course) {
         this.course = course;
     } 
+
+    public void changeCourse() {
+        course = (course < 2 ? VERTICAL_COURSE : HORIZONTAL_COURSE);
+    }
 }

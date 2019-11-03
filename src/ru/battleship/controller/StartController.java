@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -54,38 +55,47 @@ public class StartController {
     
     public void pnGridBoxMouseReleasedAction(MouseEvent e) {
         Ship shipContainer = game.getShipContainer();
+        if (e.getButton() == MouseButton.SECONDARY && shipContainer != null) {
+            shipContainer.getShips().changeCourse();
+            return;
+        }
         try {
             if (shipContainer != null && e.getTarget() instanceof Pane) {
-                Pane target = (Pane) e.getTarget();
                 Ships ships = shipContainer.getShips();
-                int[] coords = getCoordinates(target);
-                if (game.getBoard().isCurrectCell(coords, ships, false)) {
-                    for (int i = 0; i < ships.size(); i++) {
-                        Pane target2 = (Pane) getNodeFromGridPane(coords[0], coords[1]-i);
-                        target2.getChildren().add(ships.get(i));
-                    }
-                    game.getBoard().changeStates(getGridBox());
-                    game.setShipContainer(null);
-                    ships.setOpasity(1);
+                int[] coords = getCoordinates((Pane) e.getTarget());
+                if (game.getBoard().isCurrectCell(coords, ships)) {
+                    positionShips(ships, coords);
                 }
                 else {
-                    ships.reverse();
-                    if (game.getBoard().isCurrectCell(coords, ships, true)) {
-                        for (int i = 0; i < ships.size(); i++) {
-                            Pane target2 = (Pane) getNodeFromGridPane(coords[0], coords[1] + i);
-                            target2.getChildren().add(ships.get(i));
-                        }
-                        game.getBoard().changeStates(getGridBox());
-                        game.setShipContainer(null);
-                        ships.setOpasity(1);
+                    ships.setCourse(ships.getCourse() + 1);
+                    if (game.getBoard().isCurrectCell(coords, ships)) {
+                        positionShips(ships, coords);
                     }
-                    ships.reverse();
+                    ships.setCourse(ships.getCourse() - 1);
                 }
             }
         }
         catch(Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    //Располагает корабль на игровом поле
+    private void positionShips(Ships ships, int[] coords) {
+        for (int i = 0; i < ships.size(); i++) {
+            Pane target = null;
+            switch (ships.getCourse()) {
+                case 0: target = (Pane) getNodeFromGridPane(coords[0], coords[1] - i); break;
+                case 1: target = (Pane) getNodeFromGridPane(coords[0], coords[1] + i); break;
+                case 2: target = (Pane) getNodeFromGridPane(coords[0] + i, coords[1]); break;
+                case 3: target = (Pane) getNodeFromGridPane(coords[0] - i, coords[1]); break; 
+            }
+            target.getChildren().clear();
+            target.getChildren().add(ships.get(i));
+        }
+        game.getBoard().changeStates(getGridBox());
+        game.setShipContainer(null);
+        ships.setOpasity(1);
     }
 
     //Рассчитывает и возвразает координаты target в GridPane
