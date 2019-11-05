@@ -41,6 +41,7 @@ public class StartController {
     
     private final static Game game = Game.getInstance();
     private final static Random rn = new Random();
+    private Ships shipsContainer;
 
     @FXML
     private void initialize() {
@@ -65,29 +66,37 @@ public class StartController {
     
     //Обработчик события нажатия на игровое поле pnGridBox
     public void pnGridBoxMouseReleasedAction(MouseEvent e) {
-        Ship shipContainer = game.getShipContainer();
-        if (e.getButton() == MouseButton.SECONDARY && shipContainer != null) {
-            shipContainer.getShips().changeCourse();
-            return;
-        }
-        try {
-            if (shipContainer != null && e.getTarget() instanceof Pane) {
-                Ships ships = shipContainer.getShips();
-                int[] coords = getCoordinates((Pane) e.getTarget());
-                if (game.getPlayerBoard().isCurrectCell(coords, ships)) {
-                    positionShips(ships, coords, pnGridBox, game.getPlayerBoard());
-                }
-                else {
-                    ships.setCourse(ships.getCourse() + 1);
-                    if (game.getPlayerBoard().isCurrectCell(coords, ships)) {
-                        positionShips(ships, coords, pnGridBox, game.getPlayerBoard());
-                    }
-                    ships.setCourse(ships.getCourse() - 1);
-                }
+        if (shipsContainer != null) {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                shipsContainer.changeCourse();
+                return;
             }
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
+            if (e.getTarget() instanceof Ship) {
+                shipsContainer.setOpasity(1);
+                shipsContainer = ((Ship) e.getTarget()).getShips();
+                shipsContainer.setOpasity(0.3);
+            } 
+            else if (e.getTarget() instanceof Pane) {
+                int[] coords = getCoordinates((Pane) e.getTarget());
+                if (game.getPlayerBoard().isCurrectCell(coords, shipsContainer)) {
+                    positionShips(shipsContainer, coords, pnGridBox, game.getPlayerBoard());
+                } 
+                else {
+                    shipsContainer.setCourse(shipsContainer.getCourse() + 1);
+                    if (game.getPlayerBoard().isCurrectCell(coords, shipsContainer)) {
+                        positionShips(shipsContainer, coords, pnGridBox, game.getPlayerBoard());
+                    }
+                    shipsContainer.setCourse(shipsContainer.getCourse() - 1);
+                }
+                shipsContainer.setOpasity(1);
+                shipsContainer = null;
+            }
+        } 
+        else {
+            if (e.getTarget() instanceof Ship) {
+                shipsContainer = ((Ship) e.getTarget()).getShips();
+                shipsContainer.setOpasity(0.3);
+            }
         }
     }
     
@@ -193,8 +202,6 @@ public class StartController {
             target.getChildren().add(ships.get(i));
         }
         board.changeStates(getGridBox(pnGrid));
-        game.setShipContainer(null);
-        ships.setOpasity(1);
     }
 
     //Рассчитывает и возвразает координаты target в GridPane

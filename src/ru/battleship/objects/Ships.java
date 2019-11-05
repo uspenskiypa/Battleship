@@ -19,6 +19,7 @@ public class Ships {
         this();
         for (int i = 0; i < number; i++) {
             Ship ship = new Ship(this);
+            ship.setOpacity(0);
             ships.add(ship);
         }
     }
@@ -39,23 +40,11 @@ public class Ships {
     public Ship get(int k) {
         return ships.get(k);
     }
-    
-    public void reverse() {
-        java.util.Collections.reverse(ships);
-    }
-    
+        
     public void setOpasity(double value) {
         for (Ship ship: ships) {
             ship.setOpacity(value);
         }
-    }
-    
-    public LinkedList<Ship> getShips() {
-        return ships;
-    }
-
-    public void setShips(LinkedList<Ship> ships) {
-        this.ships = ships;
     }
 
     public int getCourse() {

@@ -1,10 +1,7 @@
 package ru.battleship.objects;
 
 import java.util.LinkedList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,7 +16,6 @@ public class Game {
     private StartController startController;
     private GameController gameController;
     private static Game instance;
-    private Ship shipContainer;
     private LinkedList<Ships> shipsList;
     private LinkedList<Ships> shipsAIList;
     private PlayerBoard playerBoard;
@@ -73,34 +69,12 @@ public class Game {
         Ships ships = new Ships();
         for (int i = 0; i < num; i++) {
             Ship ship = new Ship();
-            ship.setOnMouseReleased(MouseReleasedHandler);
             pnStack.getChildren().add(ship);
             ships.addShip(ship);
         }
         getShipsList().add(ships);
     }
-    
-//    EventHandler MouseMovedHandler = new EventHandler<MouseEvent>() {
-//        @Override
-//        public void handle(MouseEvent e){
-//
-//        }
-//    };    
-        
-    EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e) {
-            if (e.getButton() == MouseButton.SECONDARY) {
-                return;
-            }
-            if (shipContainer != null) {
-                shipContainer.getShips().setOpasity(1);
-            }
-            shipContainer = (Ship) e.getTarget();
-            shipContainer.getShips().setOpasity(0.3);
-        }
-    };
-    
+
     public static Game getInstance() {
         if (instance == null) {
             instance = new Game();
@@ -123,14 +97,6 @@ public class Game {
     public void setStartScene(Scene startScene) {
         this.startScene = startScene;
     }   
-
-    public Ship getShipContainer() {
-        return shipContainer;
-    }
-
-    public void setShipContainer(Ship shipContainer) {
-        this.shipContainer = shipContainer;
-    }
 
     public StartController getStartController() {
         return startController;
