@@ -1,5 +1,6 @@
 package ru.battleship.objects;
 
+import java.util.LinkedList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -19,10 +20,30 @@ public class Game {
     private GameController gameController;
     private static Game instance;
     private Ship shipContainer;
-    private Board board; 
+    private LinkedList<Ships> shipsList;
+    private LinkedList<Ships> shipsAIList;
+    private PlayerBoard playerBoard;
+    private AIBoard aiBoard;
+    
     
     private Game() {
-        board = new Board(GRID_WIDTH, GRID_HEIGHT);
+        playerBoard = new PlayerBoard(GRID_WIDTH, GRID_HEIGHT);
+        aiBoard = new AIBoard(GRID_WIDTH, GRID_HEIGHT);
+        shipsList = new LinkedList<>();
+        shipsAIList = new LinkedList<>();
+    }
+    
+    public void fillShipsAIList() {
+        shipsAIList.add(new Ships(1));
+        shipsAIList.add(new Ships(1));
+        shipsAIList.add(new Ships(1));
+        shipsAIList.add(new Ships(1));
+        shipsAIList.add(new Ships(2));
+        shipsAIList.add(new Ships(2));
+        shipsAIList.add(new Ships(2));
+        shipsAIList.add(new Ships(3));
+        shipsAIList.add(new Ships(3));
+        shipsAIList.add(new Ships(4));
     }
     
     public void fillGridPane(GridPane pnGridBox) {
@@ -30,7 +51,6 @@ public class Game {
             for (int j = 0; j < GRID_WIDTH; j++) {
                 Pane anchorPane = new Pane();
                 anchorPane.getStyleClass().add("centre-grid");
-                anchorPane.setOnMouseMoved(MouseMovedHandler);
                 pnGridBox.add(anchorPane, i, j);
             }
         }
@@ -49,27 +69,23 @@ public class Game {
         addShip(arrPane[3], 4);
     }
     
-    public void addShip(StackPane pnStack, int num) {
-        Ship prevShip = null;
+    private void addShip(StackPane pnStack, int num) {
         Ships ships = new Ships();
         for (int i = 0; i < num; i++) {
-            Ship ship = new Ship(prevShip);
-            if (prevShip != null) {
-                prevShip.setNext(ship);
-            }
+            Ship ship = new Ship();
             ship.setOnMouseReleased(MouseReleasedHandler);
             pnStack.getChildren().add(ship);
-            prevShip = ship;
             ships.addShip(ship);
         }
+        getShipsList().add(ships);
     }
     
-    EventHandler MouseMovedHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e){
-
-        }
-    };    
+//    EventHandler MouseMovedHandler = new EventHandler<MouseEvent>() {
+//        @Override
+//        public void handle(MouseEvent e){
+//
+//        }
+//    };    
         
     EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -132,7 +148,19 @@ public class Game {
         this.gameController = gameController;
     }
 
-    public Board getBoard() {
-        return board;
+    public PlayerBoard getPlayerBoard() {
+        return playerBoard;
+    }
+    
+    public AIBoard getAIBoard() {
+        return aiBoard;
+    }
+
+    public LinkedList<Ships> getShipsList() {
+        return shipsList;
+    }
+
+    public LinkedList<Ships> getShipsAIList() {
+        return shipsAIList;
     }
 }

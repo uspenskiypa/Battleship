@@ -72,7 +72,7 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="278.0" styleClass="cool-button" text="Случайная расстановка" textFill="WHITE">
+                  <Button fx:id="brRandomPlacing" mnemonicParsing="false" onAction="#brRandomPlacingButtonAction" prefHeight="45.0" prefWidth="278.0" styleClass="cool-button" text="Случайная расстановка" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>

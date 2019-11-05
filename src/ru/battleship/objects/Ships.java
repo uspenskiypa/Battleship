@@ -1,6 +1,7 @@
 package ru.battleship.objects;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Ships {
     
@@ -12,6 +13,14 @@ public class Ships {
     public Ships() { 
         ships = new LinkedList<>();
         course = HORIZONTAL_COURSE;
+    }
+    
+    public Ships(int number) { 
+        this();
+        for (int i = 0; i < number; i++) {
+            Ship ship = new Ship(this);
+            ships.add(ship);
+        }
     }
     
     public void addShip(Ship ship) {
@@ -59,5 +68,10 @@ public class Ships {
 
     public void changeCourse() {
         course = (course < 2 ? VERTICAL_COURSE : HORIZONTAL_COURSE);
+    }
+    
+    public void randomCourse() {
+        Random rn = new Random();
+        course = rn.nextBoolean() ? HORIZONTAL_COURSE : VERTICAL_COURSE;
     }
 }
