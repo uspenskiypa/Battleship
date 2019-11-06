@@ -6,13 +6,14 @@ import java.util.Random;
 public class Ships {
     
     private LinkedList<Ship> ships;
+    private LinkedList<Ship> wrecks;
     private int course;
     public final static int HORIZONTAL_COURSE = 0;
     public final static int VERTICAL_COURSE = 2;
     
     public Ships() { 
         ships = new LinkedList<>();
-        course = HORIZONTAL_COURSE;
+        wrecks = new LinkedList<>();
     }
     
     public Ships(int number) { 
@@ -28,6 +29,15 @@ public class Ships {
         ships.add(ship);
         ship.setShips(this);
     }
+    
+    public void removeShip(Ship ship) {
+        ships.remove(ship);
+        wrecks.add(ship);
+    }
+    
+    public boolean isEmpty() {
+        return ships.isEmpty();
+    }
 
     public int size() {
         return ships.size();
@@ -40,10 +50,20 @@ public class Ships {
     public Ship get(int k) {
         return ships.get(k);
     }
+    
+    public LinkedList<Ship> getWrecks() {
+        return wrecks;
+    }
         
     public void setOpasity(double value) {
         for (Ship ship: ships) {
             ship.setOpacity(value);
+        }
+    }
+    
+    public void setDestroyed() {
+        for (Ship ship: wrecks) {
+            ship.getCell().setState(State.DESTROYED);
         }
     }
 

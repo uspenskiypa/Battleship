@@ -7,6 +7,7 @@ public class Ship extends ImageView {
 
     private Image image;
     private Ships ships;
+    private Cell cell;
     
     public Ship() {
         image = new Image(getClass().getResourceAsStream("/ru/battleship/icons/ship.png"));
@@ -24,5 +25,13 @@ public class Ship extends ImageView {
 
     public void setShips(Ships ships) {
         this.ships = ships;
+    }
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }

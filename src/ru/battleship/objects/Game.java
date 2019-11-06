@@ -3,7 +3,6 @@ package ru.battleship.objects;
 import java.util.LinkedList;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import ru.battleship.controller.GameController;
 import ru.battleship.controller.StartController;
@@ -21,10 +20,7 @@ public class Game {
     private PlayerBoard playerBoard;
     private AIBoard aiBoard;
     
-    
     private Game() {
-        playerBoard = new PlayerBoard(GRID_WIDTH, GRID_HEIGHT);
-        aiBoard = new AIBoard(GRID_WIDTH, GRID_HEIGHT);
         shipsList = new LinkedList<>();
         shipsAIList = new LinkedList<>();
     }
@@ -40,16 +36,6 @@ public class Game {
         shipsAIList.add(new Ships(3));
         shipsAIList.add(new Ships(3));
         shipsAIList.add(new Ships(4));
-    }
-    
-    public void fillGridPane(GridPane pnGridBox) {
-        for (int i = 0; i < GRID_HEIGHT; i++) {
-            for (int j = 0; j < GRID_WIDTH; j++) {
-                Pane anchorPane = new Pane();
-                anchorPane.getStyleClass().add("centre-grid");
-                pnGridBox.add(anchorPane, i, j);
-            }
-        }
     }
     
     public void fillShips(StackPane[] arrPane) {
@@ -128,5 +114,13 @@ public class Game {
 
     public LinkedList<Ships> getShipsAIList() {
         return shipsAIList;
+    }
+
+    public void createPlayerBoard(GridPane pnGridBox, String visible, int i) {
+        playerBoard = new PlayerBoard(pnGridBox, visible, i);
+    }
+    
+    public void createAIBoard(GridPane pnGridBox, String visible, int i) {
+        aiBoard = new AIBoard(pnGridBox, visible, i);
     }
 }

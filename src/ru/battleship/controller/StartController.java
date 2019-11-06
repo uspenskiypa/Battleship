@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ru.battleship.objects.Board;
+import ru.battleship.objects.Cell;
 import ru.battleship.objects.Game;
 import ru.battleship.objects.Ship;
 import ru.battleship.objects.Ships;
@@ -45,20 +46,20 @@ public class StartController {
 
     @FXML
     private void initialize() {
-        game.fillGridPane(pnGridBox);
+        game.createPlayerBoard(pnGridBox, "visible", 10);
         StackPane[] arrPane = {pnStack1, pnStack2, pnStack3, pnStack4};
         game.fillShips(arrPane);
     } 
     
     //Обработчик события нажатия на кнопку "Новая игра"
     public void btStartButtonAction(ActionEvent e) throws IOException {
-        game.getGameController().initializePlayerBoard(pnGridBox);
         GridPane pnAIGridBox = new GridPane();
-        game.fillGridPane(pnAIGridBox);
+        game.createAIBoard(pnAIGridBox, "hidden", 10);
         game.fillShipsAIList();
         LinkedList<Ships> listShips = new LinkedList<>(game.getShipsAIList());
         Board board = game.getAIBoard();
         smartShipPlacing(listShips, board, pnAIGridBox);
+        game.getGameController().initializePlayerBoard(pnGridBox);
         game.getGameController().initializeAIBoard(pnAIGridBox);
         Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
         primaryStage.setScene(game.getGameScene());
@@ -76,7 +77,7 @@ public class StartController {
                 shipsContainer = ((Ship) e.getTarget()).getShips();
                 shipsContainer.setOpasity(0.3);
             } 
-            else if (e.getTarget() instanceof Pane) {
+            else if (e.getTarget() instanceof Cell) {
                 int[] coords = getCoordinates((Pane) e.getTarget());
                 if (game.getPlayerBoard().isCurrectCell(coords, shipsContainer)) {
                     positionShips(shipsContainer, coords, pnGridBox, game.getPlayerBoard());
@@ -108,6 +109,7 @@ public class StartController {
             randomShipPlacing(listShips, board, pnGridBox);
         } 
         catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     

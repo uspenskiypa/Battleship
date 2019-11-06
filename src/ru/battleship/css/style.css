@@ -1,7 +1,20 @@
 .centre-grid {
-    -fx-background-color: #BCE3FC ;
     -fx-border-color: #F7FCF8 ;
     -fx-border-width: 1 ;
+}
+
+.centre-grid.visible {
+    -fx-background-color: #BCE3FC ;
+}
+
+.centre-grid.hidden {
+    -fx-background-color: #B8CDFF ;
+}
+
+.centre-grid.hidden:hover {
+    -fx-background-color: #608fff ;
+    -fx-border-width: 2 ;
+    -fx-border-color: #3a74e0 ;
 }
 
 .cool-button {
