@@ -1,11 +1,17 @@
 package ru.battleship.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import ru.battleship.objects.Board;
 import ru.battleship.objects.Cell;
 import ru.battleship.objects.Game;
 import ru.battleship.objects.Opponent;
@@ -21,6 +27,12 @@ public class GameController {
     @FXML
     private GridPane pnGridAI;
     
+    @FXML
+    private Button btStart;
+    
+    @FXML
+    private AnchorPane pnStart;
+    
     private final Game game = Game.getInstance();
     private final Opponent opponent = new Opponent();
     
@@ -30,6 +42,15 @@ public class GameController {
     
     public void initializeAIBoard(GridPane pnGridBox) {
         pnGridAI.getChildren().addAll(pnGridBox.getChildren());
+    }
+    
+    //Обработчик события нажатия на кнопку "Новая игра"
+    public void btStartButtonAction(ActionEvent e) {
+        game.getShipsList().clear();
+        game.getShipsAIList().clear();
+        game.getStartController().init();
+        Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        primaryStage.setScene(game.getStartScene());
     }
     
     public void pnGridAIMouseReleasedAction(MouseEvent e) {
@@ -50,6 +71,11 @@ public class GameController {
             ships.removeShip(ship);
             if (ships.isEmpty()) {
                 game.getAIBoard().changeStates(ships.getWrecks());
+                ships.setDestroyed();
+            }
+            if (isEnd(game.getAIBoard())) {
+                game.getAIBoard().setVisible();
+                buttonWork(false);
             }
             return;
         }
@@ -65,7 +91,13 @@ public class GameController {
                 cell.setIsHidden(false);
                 cell.getStyleClass().set(1, "visible");
             } 
-            while(hit());
+            while(hit()) {
+                if (isEnd(game.getPlayerBoard())) {
+                    game.getAIBoard().setVisible();
+                    buttonWork(false);
+                    return;
+                }
+            }
         } 
     }
     
@@ -90,5 +122,22 @@ public class GameController {
             isHit = true;
         }
         return isHit;
+    }
+    
+    private boolean isEnd(Board board) {
+        for (Cell[] cells: board.getCellField()) {
+            for (Cell cell: cells) {
+                if (cell.getState() == State.SHIP || cell.getState() == State.WRECK ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public void buttonWork(boolean isWork) {
+        pnGridPlayer.setDisable(!isWork);
+        pnGridAI.setDisable(!isWork);
+        pnStart.setVisible(!isWork);
     }
 }

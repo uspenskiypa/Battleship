@@ -30,7 +30,7 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="150.0" styleClass="cool-button" text="Выход" textFill="WHITE">
+                  <Button fx:id="btExit" mnemonicParsing="false" onAction="#btExitButtonAction" prefHeight="47.0" prefWidth="150.0" styleClass="cool-button" text="Выход" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>

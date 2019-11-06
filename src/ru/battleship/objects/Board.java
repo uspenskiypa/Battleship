@@ -168,6 +168,17 @@ public class Board {
         }
         return true;
     }
+    
+    public void setVisible() {
+        for (Cell[] cells: cellField) {
+            for (Cell cell: cells) {
+                if (!cell.getChildren().isEmpty() && cell.getChildren().get(0) instanceof Ship) {
+                    cell.getShip().getShips().setOpasity(1);
+                }
+                cell.getStyleClass().set(1, "visible");
+            }
+        }
+    }
 
     public int getWidth() {
         return width;

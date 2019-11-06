@@ -60,16 +60,10 @@ public class Cell extends Pane {
         this.getStyleClass().set(1, "visible");
     }
 
-    /**
-     * @return the value
-     */
     public int getValue() {
         return value;
     }
 
-    /**
-     * @param value the value to set
-     */
     public void setValue(int value) {
         this.value = value;
     }

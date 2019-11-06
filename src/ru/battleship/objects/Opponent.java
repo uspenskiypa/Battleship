@@ -30,15 +30,12 @@ public class Opponent {
                     else if (cell.getValue() == maxValue) {
                         listBestCell.add(cell);
                     }
-//System.out.print(cell + " | ");
                 }
-//System.out.println("");
             }
-//System.out.println("==================");
         Collections.shuffle(listBestCell);
         for (Cell[] cells : board.getCellField()) { 
             for (Cell cell : cells) {
-                cell.setValue(0); //Обнуляем ценность ячеек перед следующим ходом
+                cell.setValue(0);
             }
         }
         return listBestCell.get(0);
@@ -76,13 +73,5 @@ public class Opponent {
                 }
             }
         }
-        
-for (Cell[] cells: cellField) {
-    for (Cell c: cells) {
-        System.out.print(c.getValue() + "\t");
-    }
-    System.out.println();
-}
-System.out.println("=========================");
     }
 }

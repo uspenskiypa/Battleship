@@ -1,7 +1,10 @@
 package ru.battleship.objects;
 
 import java.util.LinkedList;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import ru.battleship.controller.GameController;
@@ -17,8 +20,8 @@ public class Game {
     private static Game instance;
     private LinkedList<Ships> shipsList;
     private LinkedList<Ships> shipsAIList;
-    private PlayerBoard playerBoard;
-    private AIBoard aiBoard;
+    private Board playerBoard;
+    private Board aiBoard;
     
     private Game() {
         shipsList = new LinkedList<>();
@@ -60,6 +63,39 @@ public class Game {
         }
         getShipsList().add(ships);
     }
+    
+    public void createBoard(GridPane pnGridBox, String display, int i) {
+        if (display.equals("visible")) {
+            playerBoard = new Board(pnGridBox, display, i);
+        }
+        else {
+            aiBoard = new Board(pnGridBox, display, i);
+        }
+    }
+
+    public void addEvent(StackPane[] arrPane) {
+        for (StackPane pn: arrPane) {
+            pn.setOnMouseReleased(MouseReleasedHandler);
+        }
+    }
+    
+    EventHandler MouseReleasedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                return;
+            }
+            if (e.getTarget() instanceof Ship) {
+                Ships ships = startController.getShipsContainer();
+                if (ships != null) {
+                    ships.setOpasity(1);
+                }
+                ships = ((Ship) e.getTarget()).getShips();
+                ships.setOpasity(0.3);
+                startController.setShipsContainer(ships);
+            } 
+        }
+    };
 
     public static Game getInstance() {
         if (instance == null) {
@@ -99,13 +135,13 @@ public class Game {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
-
-    public PlayerBoard getPlayerBoard() {
-        return playerBoard;
+    
+    public Board getAIBoard() {
+        return aiBoard;
     }
     
-    public AIBoard getAIBoard() {
-        return aiBoard;
+    public Board getPlayerBoard() {
+        return playerBoard;
     }
 
     public LinkedList<Ships> getShipsList() {
@@ -114,13 +150,5 @@ public class Game {
 
     public LinkedList<Ships> getShipsAIList() {
         return shipsAIList;
-    }
-
-    public void createPlayerBoard(GridPane pnGridBox, String visible, int i) {
-        playerBoard = new PlayerBoard(pnGridBox, visible, i);
-    }
-    
-    public void createAIBoard(GridPane pnGridBox, String visible, int i) {
-        aiBoard = new AIBoard(pnGridBox, visible, i);
     }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -46,26 +47,40 @@ public class StartController {
 
     @FXML
     private void initialize() {
-        game.createPlayerBoard(pnGridBox, "visible", 10);
-        StackPane[] arrPane = {pnStack1, pnStack2, pnStack3, pnStack4};
-        game.fillShips(arrPane);
+        init();
     } 
     
-    //Обработчик события нажатия на кнопку "Новая игра"
-    public void btStartButtonAction(ActionEvent e) throws IOException {
-        GridPane pnAIGridBox = new GridPane();
-        game.createAIBoard(pnAIGridBox, "hidden", 10);
-        game.fillShipsAIList();
-        LinkedList<Ships> listShips = new LinkedList<>(game.getShipsAIList());
-        Board board = game.getAIBoard();
-        smartShipPlacing(listShips, board, pnAIGridBox);
-        game.getGameController().initializePlayerBoard(pnGridBox);
-        game.getGameController().initializeAIBoard(pnAIGridBox);
-        Stage primaryStage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        primaryStage.setScene(game.getGameScene());
+    public void init() {
+        game.createBoard(pnGridBox, "visible", 10);
+        StackPane[] arrPane = {pnStack1, pnStack2, pnStack3, pnStack4};
+        game.addEvent(arrPane);
+        game.fillShips(arrPane);
     }
     
-    //Обработчик события нажатия на игровое поле pnGridBox
+    //Обработчик нажатия на кнопку "Новая игра"
+    public void btStartButtonAction(ActionEvent e) throws IOException {
+        if (pnStack1.getChildren().isEmpty() && pnStack2.getChildren().isEmpty()
+          && pnStack3.getChildren().isEmpty() && pnStack4.getChildren().isEmpty()) {
+            GridPane pnAIGridBox = new GridPane();
+            game.createBoard(pnAIGridBox, "hidden", 10);
+            game.fillShipsAIList();
+            LinkedList<Ships> listShips = new LinkedList<>(game.getShipsAIList());
+            Board board = game.getAIBoard();
+            smartShipPlacing(listShips, board, pnAIGridBox);
+            game.getGameController().initializePlayerBoard(pnGridBox);
+            game.getGameController().initializeAIBoard(pnAIGridBox);
+            game.getGameController().buttonWork(true);
+            Stage primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            primaryStage.setScene(game.getGameScene());
+        }
+    }
+    
+    //Обработчик нажатия на кнопку "Выход"
+    public void btExitButtonAction(ActionEvent actionEvent) {
+         Platform.exit();
+    }
+    
+    //Обработчик нажатия на игровое поле pnGridBox
     public void pnGridBoxMouseReleasedAction(MouseEvent e) {
         if (shipsContainer != null) {
             if (e.getButton() == MouseButton.SECONDARY) {
@@ -101,7 +116,7 @@ public class StartController {
         }
     }
     
-    //Обработчик события нажатия на кнопку "Случайная расстановка"
+    //Обработчик нажатия на кнопку "Случайная расстановка"
     public void brRandomPlacingButtonAction(ActionEvent e) {
         try {
             LinkedList<Ships> listShips = new LinkedList<>(game.getShipsList());
@@ -236,5 +251,13 @@ public class StartController {
             }
         }
         return null;
+    }
+    
+    public void setShipsContainer(Ships shipsContainer) {
+        this.shipsContainer = shipsContainer;
+    }
+    
+    public Ships getShipsContainer() {
+        return shipsContainer;
     }
 }
