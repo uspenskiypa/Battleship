@@ -14,8 +14,21 @@
          <children>
             <HBox alignment="CENTER" prefHeight="150.0" prefWidth="1280.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="pnRoleLeft" prefHeight="99.0" prefWidth="99.0">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="20.0" top="9.0" />
+                     </HBox.margin></AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="250.0">
+                     <children>
+                        <TextField fx:id="txtLeft" editable="false" layoutX="10.0" layoutY="18.0" prefHeight="45.0" prefWidth="230.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="9.0" />
+                     </HBox.margin></AnchorPane>
                   <AnchorPane fx:id="pnStart" prefHeight="91.0" prefWidth="200.0" style="-fx-background-color: #B8CDFF;" visible="false">
                      <children>
                         <Button fx:id="btStart" alignment="CENTER" contentDisplay="CENTER" layoutY="50.0" mnemonicParsing="false" onAction="#btStartButtonAction" prefHeight="45.0" prefWidth="200.0" styleClass="cool-button" text="Новая Игра" textFill="WHITE">
@@ -25,11 +38,24 @@
                         </Button>
                      </children>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="100.0" right="100.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="250.0">
+                     <children>
+                        <TextField fx:id="txtRight" editable="false" layoutX="10.0" layoutY="18.0" prefHeight="45.0" prefWidth="230.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="9.0" />
+                     </HBox.margin></AnchorPane>
+                  <AnchorPane fx:id="pnRoleRight" prefHeight="99.0" prefWidth="99.0">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="20.0" top="9.0" />
+                     </HBox.margin></AnchorPane>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="502.0" prefWidth="1280.0">

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -33,15 +34,33 @@ public class GameController {
     @FXML
     private AnchorPane pnStart;
     
+    @FXML
+    private AnchorPane pnRoleLeft;
+    
+    @FXML
+    private AnchorPane pnRoleRight;
+    
+    @FXML
+    private TextField txtLeft;
+    
+    @FXML
+    private TextField txtRight;
+    
     private final Game game = Game.getInstance();
     private final Opponent opponent = new Opponent();
     
     public void initializePlayerBoard(GridPane pnGridBox) {
         pnGridPlayer.getChildren().addAll(pnGridBox.getChildren());
+        pnRoleLeft.getChildren().add(new ImageView(
+            new Image(getClass().getResourceAsStream("/ru/battleship/icons/person.jpg"))
+        ));
     }
     
     public void initializeAIBoard(GridPane pnGridBox) {
         pnGridAI.getChildren().addAll(pnGridBox.getChildren());
+        pnRoleRight.getChildren().add(new ImageView(
+            new Image(getClass().getResourceAsStream("/ru/battleship/icons/computer.jpg"))
+        ));
     }
     
     //Обработчик события нажатия на кнопку "Новая игра"
@@ -57,6 +76,7 @@ public class GameController {
         if (e.getButton() == MouseButton.SECONDARY || e.getTarget() instanceof GridPane) {
             return;
         }
+        txtLeft.setText("");
         if (e.getTarget() instanceof Ship) {
             Ship ship = (Ship) e.getTarget();
             if (!ship.getCell().getIsHidden()) {
@@ -69,9 +89,11 @@ public class GameController {
             ship.getCell().setIsHidden(false);
             ship.getParent().getStyleClass().set(1, "visible");
             ships.removeShip(ship);
+            txtRight.setText(txtRight.getText() + " Ранен!");
             if (ships.isEmpty()) {
                 game.getAIBoard().changeStates(ships.getWrecks());
                 ships.setDestroyed();
+                txtRight.setText(txtRight.getText() + " Убит!");
             }
             if (isEnd(game.getAIBoard())) {
                 game.getAIBoard().setVisible();
@@ -90,6 +112,7 @@ public class GameController {
                 ));
                 cell.setIsHidden(false);
                 cell.getStyleClass().set(1, "visible");
+                txtRight.setText(txtRight.getText() + " Мимо!");
             } 
             while(hit()) {
                 if (isEnd(game.getPlayerBoard())) {
@@ -102,6 +125,7 @@ public class GameController {
     }
     
     private boolean hit() {
+        txtRight.setText("");
         boolean isHit = false;
         Cell bestCell = opponent.getBestCell(game.getPlayerBoard());
         bestCell.setIsHidden(false);
@@ -109,15 +133,18 @@ public class GameController {
             bestCell.getChildren().add(new ImageView(
                         new Image(getClass().getResourceAsStream("/ru/battleship/icons/shot.png"))
             ));
+            txtLeft.setText(txtLeft.getText() + " Мимо!");
         }
         else if ((bestCell.getChildren().get(0)) instanceof Ship) {
             Ship ship = (Ship) bestCell.getChildren().get(0);
             Ships ships = ship.getShips();
             ship.setImage(new Image(getClass().getResourceAsStream("/ru/battleship/icons/wreck.png")));
             ship.getCell().setState(State.WRECK);
+            txtLeft.setText(txtLeft.getText() + " Ранен!");
             ships.removeShip(ship);
             if (ships.isEmpty()) {
                 ships.setDestroyed();
+                txtLeft.setText(txtLeft.getText() + " Убит!");
             }
             isHit = true;
         }
