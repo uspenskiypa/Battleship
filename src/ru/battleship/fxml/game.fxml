@@ -122,10 +122,26 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="6.0" layoutY="7.0" text="Задержка хода ИИ">
+                           <content>
+                              <Slider fx:id="sliderPause" blockIncrement="0.1" layoutX="7.0" layoutY="13.0" majorTickUnit="0.25" max="1.0" min="2.0E-4" minorTickCount="0" prefHeight="56.0" prefWidth="166.0" showTickLabels="true" showTickMarks="true" />
+                           </content>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TitledPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                </children>
             </HBox>
